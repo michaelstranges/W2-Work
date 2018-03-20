@@ -2,18 +2,24 @@
 
 <html lang="en">
   <head>
-    <titles>My TinyApp</title>
+    <title>My TinyApp</title>
   </head>
 
   <body>
-      <% for(keys in urls){ %>
-        <li>
-          <%= "id: " + keys + " " + urls[keys] %>
-        </li>
-      <% } %>
-      <br>
-        <a href="">I'm a dead link</a>
-      <br>
+
+    <header>
+      <% include ./partials/_header.ejs %>
+    </header>
+    <br>
+
+    <% for(keys in urls){ %>
+      <li>
+        <%= "id: " + keys + " " + urls[keys] %>
+      </li>
+    <% } %>
+    <br>
+      <a href="">I'm a dead link</a>
+    <br>
 
 
 
