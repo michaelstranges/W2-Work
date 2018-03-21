@@ -73,7 +73,12 @@ app.post("/urls/:id/delete", (req, res) => {
 })
 
 app.post("/urls/:id", (req,res) => {
-
+  let longURL = "";
+  for(let URL in urlDatabase){
+      if(URL === req.params.id){
+        urlDatabase[URL] = req.body.toUpdate
+      }
+  }
 //a render???
 })
 
