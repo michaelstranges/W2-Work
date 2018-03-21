@@ -13,18 +13,18 @@
     <br>
 
     <% for(keys in urls){ %>
-      <li>
-        <%= "id: " + keys + " " + urls[keys] %>
-      </li>
+       <ul>
+        <form method="POST" action= <%= `/urls/${keys}/delete` %>>
+          <li>
+            <%= "id: " + keys + " " + urls[keys] %>
+            <button type="submit">Delete</button>
+          </li>
+        </form>
+      </ul>
     <% } %>
     <br>
       <a href="">I'm a dead link</a>
     <br>
-
-
-
-
-
 
   </body>
 

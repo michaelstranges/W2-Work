@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- /urls/:id -->
 
 <html lang="en">
   <head>
@@ -11,12 +12,16 @@
 
     <header>
       <% include ./partials/_header.ejs %>
-      <br>
     </header>
 
-    <p>
-      <%= `${shortURL} ${urls[shortURL]}` %>
-    </p>
+      <!-- <h2>ShortURL<%= `${shortURL} ${urls[shortURL]}` %></h2> -->
+      <h1>ShortURL:</h1>
+      </h2><%= `${shortURL}` %></h2></p>
+
+    <form method="POST" action= "">
+      <input type="text" name="toUpdate">
+      <input type="submit" value="Update">
+    </form>
 
 
   </body>
