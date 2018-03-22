@@ -12,17 +12,21 @@
     </header>
     <br>
 
-    <% for(keys in urls){ %>
-       <ul>
-        <form method="POST" action= <%= `/urls/${keys}/delete` %>>
-          <li>
-            <%= "id: " + keys + " " + urls[keys] %>
-            <a href=<%= `/urls/${keys}` %>>Edit</a>
-            <button type="submit">Delete</button>
-          </li>
-        </form>
-      </ul>
-    <% } %>
+  <% for (userID in urls){ %>
+    <% if(userID === user.id){ %>
+      <% for(links in urls[userID]){ %>
+        <ul>
+          <form method="POST" action= <%= `/urls/${links}/delete` %>>
+            <li>
+              <%= "id: " + links + " " + urls[userID][links] %>
+              <a href=<%= `/urls/${links}` %>>Edit</a>
+              <button type="submit">Delete</button>
+            </li>
+          </form>
+        </ul>
+      <% } %>
+    <%} %>
+<% } %>
     <br>
       <a href="">I'm a dead link</a>
     <br>

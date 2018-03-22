@@ -22,10 +22,11 @@ const users = {
   }
 }
 
-var urlDatabase = { userID : { test :
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-}
+var urlDatabase = {
+  test : {
+    "b2xVn2": "http://www.lighthouselabs.ca",
+    "9sm5xK": "http://www.google.com"
+  }
 };
 
 app.get("/", (req, res) => {
@@ -40,7 +41,11 @@ app.get("/urls.json", (req, res) => {
 app.get("/urls", (req, res) => {
   let theUser = req.cookies["user_id"]
   let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
-  res.render("urls_index", templateVars);
+  if(users[req.cookies["user_id"]] === undefined){
+    res.redirect("/login") //when logged out go here
+  } else {
+    res.render("urls_index", templateVars);
+  }
 })
 
 app.get("/hello", (req, res) => {
@@ -98,17 +103,28 @@ app.listen(PORT, () => {
 
 
 app.post("/urls/:id/delete", (req, res) => {
-    delete urlDatabase[req.params.id]
+    console.log("I'm communicating")
+    let linkID = req.params.id
+    delete urlDatabase[req.cookies.user_id][linkID]
   res.redirect("/urls");
 })
 
 app.post("/urls/:id", (req, res) => {
   let longURL = "";
-  for(let URL in urlDatabase){
-      if(URL === req.params.id){
-        urlDatabase[URL] = req.body.toUpdate
+  console.log("I'm working")
+  let thisUser = req.cookies.user_id
+  console.log(req.params.id)
+
+  for(let user in urlDatabase){
+    for(let shortURL in urlDatabase[user]){
+      if(user === thisUser){
+          if(shortURL === req.params.id){
+        urlDatabase[user][shortURL] = req.body.toUpdate
+        }
       }
+    }
   }
+res.redirect("/urls")
 })
 
 
