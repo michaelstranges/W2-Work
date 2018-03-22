@@ -15,10 +15,10 @@ const users = {
     email: "user@example.com",
     password: "purple-monkey-dinosaur"
   },
-  "user2RandomID": {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk"
+  "test": {
+    id: "test",
+    email: "test@test.com",
+    password: "test"
   }
 }
 
@@ -35,8 +35,10 @@ app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
+//uses templateVars
 app.get("/urls", (req, res) => {
-  let templateVars = { urls : urlDatabase, username: req.cookies["username"] };
+  let theUser = req.cookies["user_id"]
+  let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
   res.render("urls_index", templateVars);
 })
 
@@ -44,13 +46,15 @@ app.get("/hello", (req, res) => {
   res.end("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+//uses templateVars
 app.get("/urls/new", (req, res) => {
-  let templateVars = { username: req.cookies["username"] };
+  let templateVars = { user : users[req.cookies["user_id"]]  };
   res.render("urls_new", templateVars);
 });
 
+//uses templateVars
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { shortURL: req.params.id, urls: urlDatabase, username: req.cookies["username"] };
+  let templateVars = { shortURL: req.params.id, urls: urlDatabase, user : users[req.cookies["user_id"]] };
   res.render("urls_show", templateVars);
 });
 
@@ -62,6 +66,14 @@ app.post("/urls", (req, res) => {
   //console.log(urlDatabase);
   res.redirect(`http://localhost:8080/urls/${newID}`)
   })
+
+app.get("/login", (req, res) => {
+
+  res.render("urls_login")
+
+})
+
+
 
 app.get("/u/:shortURL", (req, res) => {
 
@@ -98,14 +110,24 @@ app.post("/urls/:id", (req, res) => {
 
 app.post("/login", (req,res) =>{
 
-  res.cookie("username", req.body.username)
-  res.redirect("/urls");
+let match = 0;
 
+  for(let currUser in users){
+    if ((req.body.email === users[currUser].email) && ((req.body.password) === users[currUser].password)){
+      res.cookie("user_id", users[currUser].id)
+      res.redirect("/urls");
+      match += 1; //adds one if a match is found
+    }
+  }
+//if not match is found will equal 0 and this status will show up
+  if(match === 0) {
+    res.sendStatus(403)
+  }
 })
 
 app.post("/logout", (req,res) => {
 
-  res.cookie("username")
+  res.clearCookie("user_id")
   res.redirect("/urls");
 
 })
@@ -118,16 +140,16 @@ app.post("/register", (req, res) => {
 
 //checks if a blank was sent for email
   if(req.body.email === ""){
-    res.status(400).send("Please enter an email");
+    res.sendStatus(400).send("Please enter an email");
   }
 //check if a blank was sent for password
   if(req.body.password === ""){
-    res.status(400).send("Please enter a password");
+    res.sendStatus(400).send("Please enter a password");
   }
 //check if email already exists
   for(let existEmail in users){
     if(req.body.email === users[existEmail].email){
-      res.status(400).send("That email already exists.  Please Try Again")
+      res.sendStatus(400).send("That email already exists.  Please Try Again")
     }
   }
 
@@ -140,7 +162,7 @@ app.post("/register", (req, res) => {
 
   users[myID] = newAcc
 
-  console.log(users)
+  //console.log(users)
 
   res.cookie("user_id", myID)
   res.redirect("/urls")

@@ -1,0 +1,24 @@
+<!--
+<% if(username !== "undefined" || username > 0){  %>
+
+  <form method="POST" action="/logout">
+  <label><%= username %></label>
+  <input type="submit" value="logout">
+  </form>
+
+<% } else { %>
+
+  <form method="POST" action="/login">
+  <label for="username">Username:</label>
+  <input type="text" name="username">
+  <input type="submit" value="Submit">
+  </form>
+
+<% } %>
+-->
+
+  <form method="POST" action="/login">
+  <label for="username">Username:</label>
+  <input type="text" name="username">
+  <input type="submit" value="Submit">
+  </form>

@@ -4,21 +4,19 @@
 
 <a>My Super Awesome Header</a>
 
-<% if(username !== "undefined" || username > 0){  %>
+<% if(user === undefined){  %>
 
-  <form method="POST" action="/logout">
-  <label><%= username %></label>
-  <input type="submit" value="logout">
-  </form>
+  <a href="/register">Register</a>
+  <a href="/login">Login</a>
 
 <% } else { %>
 
-  <form method="POST" action="/login">
-  <label for="username">Username:</label>
-  <input type="text" name="username">
-  <input type="submit" value="Submit">
+  <form method="POST" action="/logout">
+  <label><%= user.email %></label>
+  <input type="submit" value="logout">
   </form>
 
 <% } %>
+
 
 
