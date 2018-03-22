@@ -22,9 +22,10 @@ const users = {
   }
 }
 
-var urlDatabase = {
+var urlDatabase = { userID : { test :
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
+}
 };
 
 app.get("/", (req, res) => {
@@ -49,7 +50,12 @@ app.get("/hello", (req, res) => {
 //uses templateVars
 app.get("/urls/new", (req, res) => {
   let templateVars = { user : users[req.cookies["user_id"]]  };
-  res.render("urls_new", templateVars);
+// if cookies object is empty (equal 0) then go to login
+  if(Object.keys(req.cookies).length === 0){
+    res.redirect("/login")
+  } else {
+    res.render("urls_new", templateVars);
+  }
 });
 
 //uses templateVars
