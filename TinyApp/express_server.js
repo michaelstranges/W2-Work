@@ -73,8 +73,6 @@ app.get("/login", (req, res) => {
 
 })
 
-
-
 app.get("/u/:shortURL", (req, res) => {
 
   let longURL = "";
