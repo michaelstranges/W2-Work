@@ -9,6 +9,19 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
 
+const users = {
+  "userRandomID": {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+  "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk"
+  }
+}
+
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
@@ -40,7 +53,6 @@ app.get("/urls/:id", (req, res) => {
   let templateVars = { shortURL: req.params.id, urls: urlDatabase, username: req.cookies["username"] };
   res.render("urls_show", templateVars);
 });
-
 
 app.post("/urls", (req, res) => {
   //console.log(req.body);  // debug statement to see POST parameters
@@ -74,7 +86,7 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 })
 
-app.post("/urls/:id", (req,res) => {
+app.post("/urls/:id", (req, res) => {
   let longURL = "";
   for(let URL in urlDatabase){
       if(URL === req.params.id){
@@ -82,6 +94,7 @@ app.post("/urls/:id", (req,res) => {
       }
   }
 })
+
 
 app.post("/login", (req,res) =>{
 
@@ -94,6 +107,44 @@ app.post("/logout", (req,res) => {
 
   res.cookie("username")
   res.redirect("/urls");
+
+})
+
+app.get("/register", (req, res) => {
+  res.render("register");
+})
+
+app.post("/register", (req, res) => {
+
+//checks if a blank was sent for email
+  if(req.body.email === ""){
+    res.status(400).send("Please enter an email");
+  }
+//check if a blank was sent for password
+  if(req.body.password === ""){
+    res.status(400).send("Please enter a password");
+  }
+//check if email already exists
+  for(let existEmail in users){
+    if(req.body.email === users[existEmail].email){
+      res.status(400).send("That email already exists.  Please Try Again")
+    }
+  }
+
+  let myID = generateRandomString()
+  let newAcc = {};
+
+  newAcc.id = myID
+  newAcc.email = req.body.email
+  newAcc.password = req.body.password
+
+  users[myID] = newAcc
+
+  console.log(users)
+
+  res.cookie("user_id", myID)
+  res.redirect("/urls")
+
 
 })
 
