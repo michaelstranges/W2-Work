@@ -12,9 +12,10 @@
     </header>
     <br>
 
+        <% console.log(urls, user.id) %>
   <% for (userID in urls){ %>
     <% if(userID === user.id){ %>
-      <% for(links in urls[userID]){ %>
+      <% for(links in user.id){ %>
         <ul>
           <form method="POST" action= <%= `/urls/${links}/delete` %>>
             <li>

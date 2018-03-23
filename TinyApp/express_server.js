@@ -73,7 +73,7 @@ app.post("/urls", (req, res) => {
   //console.log(req.body);  // debug statement to see POST parameters
   let newID = generateRandomString()
   let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
-  urlDatabase[req.cookies.user_id][newID] = req.body.longURL
+  urlDatabase[req.cookies.user_id] = req.body.longURL
   res.render("urls_index", templateVars)
  // res.redirect(`http://localhost:8080/urls/${newID}`)
   })
