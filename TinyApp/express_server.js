@@ -71,11 +71,15 @@ app.get("/urls/:id", (req, res) => {
 
 app.post("/urls", (req, res) => {
   //console.log(req.body);  // debug statement to see POST parameters
-  let newID = generateRandomString()
+  let newID = req.cookies["user_id"];
+  console.log(newID)
+  let shortURLID = generateRandomString()
   let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
-  urlDatabase[req.cookies.user_id] = req.body.longURL
+
+  urlDatabase[req.cookies.user_id][shortURLID] = req.body.longURL
   res.render("urls_index", templateVars)
  // res.redirect(`http://localhost:8080/urls/${newID}`)
+
   })
 
 app.get("/login", (req, res) => {
@@ -178,12 +182,17 @@ app.post("/register", (req, res) => {
 
   let myID = generateRandomString()
   let newAcc = {};
+  let newURL = {};
 
   newAcc.id = myID
   newAcc.email = req.body.email
   newAcc.password = req.body.password
 
-  users[myID] = newAcc
+  users[myID] = newAcc;
+  urlDatabase[myID] = newURL;
+
+  console.log(users)
+  console.log(urlDatabase)
 
   //console.log(users)
 
