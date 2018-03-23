@@ -72,10 +72,10 @@ app.get("/urls/:id", (req, res) => {
 app.post("/urls", (req, res) => {
   //console.log(req.body);  // debug statement to see POST parameters
   let newID = generateRandomString()
-  //console.log(req.body)
-  urlDatabase[newID] = req.body.longURL
-  //console.log(urlDatabase);
-  res.redirect(`http://localhost:8080/urls/${newID}`)
+  let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
+  urlDatabase[req.cookies.user_id][newID] = req.body.longURL
+  res.render("urls_index", templateVars)
+ // res.redirect(`http://localhost:8080/urls/${newID}`)
   })
 
 app.get("/login", (req, res) => {
@@ -88,11 +88,15 @@ app.get("/u/:shortURL", (req, res) => {
 
   let longURL = "";
 
-  for (let URL in urlDatabase){
-    if(URL === req.params.shortURL){
-      longURL = urlDatabase[URL]
-    }
+  for (let user in urlDatabase){
+    for(shortURL in urlDatabase[user]){
+
+      if(shortURL === req.params.shortURL){
+        longURL = urlDatabase[user].shortURL
+      }
+    } //stopped here! try to match up URL
   }
+  console.log(longURL)
   res.redirect(longURL);
 });
 
@@ -116,7 +120,7 @@ app.post("/urls/:id", (req, res) => {
   console.log(req.params.id)
 
   for(let user in urlDatabase){
-    for(let shortURL in urlDatabase[user]){
+    for(let shortURL in urlDatabase[user]){c
       if(user === thisUser){
           if(shortURL === req.params.id){
         urlDatabase[user][shortURL] = req.body.toUpdate
