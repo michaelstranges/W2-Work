@@ -90,13 +90,12 @@ app.get("/u/:shortURL", (req, res) => {
 
   for (let user in urlDatabase){
     for(shortURL in urlDatabase[user]){
-
       if(shortURL === req.params.shortURL){
-        longURL = urlDatabase[user].shortURL
+        longURL = urlDatabase[user][shortURL]
+        break;
       }
     } //stopped here! try to match up URL
   }
-  console.log(longURL)
   res.redirect(longURL);
 });
 
@@ -120,7 +119,7 @@ app.post("/urls/:id", (req, res) => {
   console.log(req.params.id)
 
   for(let user in urlDatabase){
-    for(let shortURL in urlDatabase[user]){c
+    for(let shortURL in urlDatabase[user]){
       if(user === thisUser){
           if(shortURL === req.params.id){
         urlDatabase[user][shortURL] = req.body.toUpdate
