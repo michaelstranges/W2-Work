@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser")
+const bcrypt = require("bcrypt");
+
+
 var PORT = process.env.PORT || 8080; // default port 8080
 
 app.set("view engine", "ejs");
@@ -139,7 +142,9 @@ app.post("/login", (req,res) =>{
 let match = 0;
 
   for(let currUser in users){
-    if ((req.body.email === users[currUser].email) && ((req.body.password) === users[currUser].password)){
+    //original: if ((req.body.email === users[currUser].email) && ((req.body.password) === users[currUser].password)){
+    if ((req.body.email === users[currUser].email) && ((bcrypt.compareSync(req.body.password, users[currUser].password)))) {
+
       res.cookie("user_id", users[currUser].id)
       res.redirect("/urls");
       match += 1; //adds one if a match is found
@@ -185,13 +190,16 @@ app.post("/register", (req, res) => {
 
   newAcc.id = myID
   newAcc.email = req.body.email
-  newAcc.password = req.body.password
+
+  //passwordsssssss --- secure ME!
+  const password = req.body.password
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  newAcc.password = hashedPassword;
 
   users[myID] = newAcc;
   urlDatabase[myID] = newURL;
 
-  console.log(users)
-  console.log(urlDatabase)
+  console.log(newAcc.password)
 
   //console.log(users)
 
