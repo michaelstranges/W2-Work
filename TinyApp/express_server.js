@@ -72,7 +72,6 @@ app.get("/urls/:id", (req, res) => {
 app.post("/urls", (req, res) => {
   //console.log(req.body);  // debug statement to see POST parameters
   let newID = req.cookies["user_id"];
-  console.log(newID)
   let shortURLID = generateRandomString()
   let templateVars = { urls : urlDatabase, user : users[req.cookies["user_id"]] };
 
