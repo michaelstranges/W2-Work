@@ -49,7 +49,7 @@ app.get("/urls", (req, res) => {
   let theUser = req.session.user_id
   let templateVars = { urls : urlDatabase, user : users[req.session.user_id] };
   if(users[req.session.user_id] === undefined){
-    res.redirect("/login") //when logged out go here
+    res.redirect("/login") //wres.redirect("/login")
   } else {
     res.render("urls_index", templateVars);
   }
