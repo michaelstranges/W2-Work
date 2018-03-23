@@ -206,6 +206,8 @@ app.post("/register", (req, res) => {
   res.cookie("user_id", myID)
   res.redirect("/urls")
 
+  console.log(users)
+
 
 })
 
