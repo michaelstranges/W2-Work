@@ -63,7 +63,7 @@ app.get("/hello", (req, res) => {
 app.get("/urls/new", (req, res) => {
   let templateVars = { user : users[req.session.user_id]  };
 // if cookies object is empty (equal 0) then go to login
-  if(Object.keys(req.cookies).length === 0){
+  if(Object.keys(req.session.user_id).length === 0){
     res.redirect("/login")
   } else {
     res.render("urls_new", templateVars);
