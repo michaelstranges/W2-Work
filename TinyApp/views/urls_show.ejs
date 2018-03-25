@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
 
-    <title>My TinyApp show</title>
+    <title>My TinyApp</title>
 
   </head>
 
@@ -14,9 +14,7 @@
       <% include ./partials/_header.ejs %>
     </header>
 
-      <!-- <h2>ShortURL<%= `${shortURL} ${urls[shortURL]}` %></h2> -->
-      <h1>ShortURL:</h1>
-      </h2><%= `${shortURL}` %></h2></p>
+      <h3>ShortURL: <%= `${shortURL}` %></h3>
 
     <form method="POST" action= /urls/<%= `${shortURL}` %>>
       <input type="text" name="toUpdate">

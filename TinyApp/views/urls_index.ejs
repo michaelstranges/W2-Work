@@ -10,6 +10,9 @@
       <% include ./partials/_header.ejs %>
     </header>
     <br>
+      <form action="/urls/new">
+        <input type="submit" value="Shorten a Link!">
+      </form>
 
     <% for (userID in urls){ %>
       <% if(userID === user.id){ %>
@@ -17,17 +20,20 @@
               <ul>
                 <form method="POST" action= <%= `/urls/${links}/delete` %>>
                 <li>
-                  <%= "id: " + links + " " + urls[userID][links] %>
-                  <a href=<%= `/urls/${links}` %>>Edit</a>
                   <button type="submit">Delete</button>
+                  <a href=<%= `/urls/${links}` %>>Edit</a>
+                  <%= "id: " + links + " " + urls[userID][links] %>
                </li>
                </form>
               </ul>
          <% } %>
       <%} %>
   <% } %>
+
+
+
     <br>
-      <a href="/urls/new">Shorten a Link!</a>
+
     <br>
 
   </body>

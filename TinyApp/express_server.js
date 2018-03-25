@@ -150,7 +150,7 @@ app.post("/login", (req,res) =>{
   }
 //if no match is found will equal 0 and this status will show up
   if(match === 0) {
-    res.sendStatus(403).send("User does not exist")
+    res.status(403).send("403: Username or Password Invalid")
   }
 });
 
@@ -169,16 +169,16 @@ app.post("/register", (req, res) => {
 
 //checks if a blank was sent for email
   if(req.body.email === ""){
-    res.sendStatus(400).send("Please enter an email");
+    res.status(400).send("400: Please enter an email");
   }
 //check if a blank was sent for password
   if(req.body.password === ""){
-    res.sendStatus(400).send("Please enter a password");
+    res.status(400).send("400: Please enter a password");
   }
 //check if email already exists
   for(let existEmail in users){
     if(req.body.email === users[existEmail].email){
-      res.sendStatus(400).send("That email already exists.  Please Try Again")
+      res.status(400).send("400: That email already exists.  Please Try Again")
     }
   }
 
