@@ -17,7 +17,7 @@ const users = {
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
-    password: "purple-monkey-dinosaur"
+    password: bcrypt.hashSync("purple-monkey-dinosaur", 10)
   },
   "test": {
     id: "test",
@@ -109,7 +109,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 //confirmation on console that server is listening
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`TinyApp is listening on port ${PORT}!`);
 });
 
 //delete page - upon clicking delete on urls, redirects to this page
