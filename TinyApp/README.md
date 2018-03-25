@@ -8,10 +8,9 @@ As a registered user, you will be able to utilize the tool and store your links 
 
 ## Final Product
 
-!["Screenshot of login page"](https://github.com/michaelstranges/W2-Work/blob/master/TinyApp/docs/page_login.png)
+
 !["Screenshot of URLs page"](https://github.com/michaelstranges/W2-Work/blob/master/TinyApp/docs/page-urls.png)
-!["Screenshot of ShortURL create page"](https://github.com/michaelstranges/W2-Work/blob/master/TinyApp/docs/page-urls_new.png)
-!["Screenshot of update page"](https://github.com/michaelstranges/W2-Work/blob/master/TinyApp/docs/page-urls_update.png)
+
 
 ## Dependencies
 
